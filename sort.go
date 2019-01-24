@@ -1,84 +1,10 @@
+//排序相关算法
 package main
 
-import (
-	"fmt"
-)
 
-func main() {
-	list := []int{4, 67, 8, 1, 45, 49, 2, 43, 88}
-	fmt.Println("冒泡排序")
-	listBubble := make([]int, len(list))
-	copy(listBubble, list)
-	fmt.Println(listBubble)
-	sortBubble(listBubble)
-	fmt.Println(listBubble)
 
-	fmt.Println("快速排序")
-	listFast := make([]int, len(list))
-	copy(listFast, list)
-	fmt.Println(listFast)
-	sortFast(listFast)
-	fmt.Println(listFast)
-
-	fmt.Println("堆排序")
-	listHeap := make([]int, len(list))
-	copy(listHeap, list)
-	fmt.Println(listHeap)
-	// adjustHeap(listHeap, len(listHeap)-1)
-	sortHeap(listHeap)
-	fmt.Println(listHeap)
-
-	fmt.Println("链表反序")
-	n1 := Node{
-		v: "n1",
-	}
-	n2 := Node{
-		v: "n2",
-		p: &n1,
-	}
-	n3 := Node{
-		v: "n3",
-		p: &n2,
-	}
-
-	n3.print()
-	reverseLinkList(&n3)
-	n1.print()
-
-}
-
-type Node struct {
-	v string
-	p *Node
-}
-
-func (node *Node) print() {
-	fmt.Println()
-	for node != nil {
-		fmt.Print(node.v)
-		node = node.p
-	}
-}
-
-func reverseLinkList(node *Node) {
-	var pre *Node
-	var now *Node
-	var next *Node
-
-	now = node
-
-	for now != nil {
-		// fmt.Println(now.v)
-		next = now.p //备份下一个节点
-		now.p = pre  //连接之前的节点
-
-		pre = now //往后移动
-		now = next
-	}
-
-}
-
-func sortFast(list []int) {
+//快排
+func SortQuick(list []int) {
 	if len(list) == 0 {
 		return
 	}
@@ -97,11 +23,12 @@ func sortFast(list []int) {
 		// fmt.Println(list)
 	}
 
-	sortFast(list[0:mid])  //左
-	sortFast(list[mid+1:]) //右
+	SortQuick(list[0:mid])  //左
+	SortQuick(list[mid+1:]) //右
 }
 
-func sortBubble(list []int) {
+//冒泡排序
+func SortBubble(list []int) {
 	len := len(list)
 	for i := 0; i < len-1; i++ {
 		for j := 0; j < len-1-i; j++ {
@@ -115,7 +42,9 @@ func sortBubble(list []int) {
 	}
 }
 
-func sortHeap(list []int) {
+
+//堆排序
+func SortHeap(list []int) {
 	for i := len(list) - 1; i >= 2; i-- { //每次调整完之后，都将头尾互调
 		adjustHeap(list, i)
 		list[0], list[i] = list[i], list[0]
